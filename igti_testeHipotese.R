@@ -4,7 +4,8 @@
 
 ###########################################################
 
-#Copie este código, cole no seu R e execute para ver os resultados rm(list = ls()) #Limpa memória do R
+rm(list = ls()) #Limpa memória do R
+
 ##########	Avaliando	a	normalidade	de	uma	variável	aleatória #############################
 
 set.seed(10)
@@ -15,26 +16,40 @@ va_normal <- rnorm(n = 70, mean = 25, sd = 8)
 
 #Gera v.a. que segue uma distribuição F (não normal) com n = 15, 2 graus de liberdade no numerados e 10 graus de liberdade no denominador
 
-va_nao_normal <- rf(n =15, df1 =2, df2 = 10) #Visualize o histograma das variáveis geradas
-#Observe como os dados se distribuem em torno do valor médio na va normal hist(va_normal)
+va_nao_normal <- rf(n =15, df1 =2, df2 = 10) 
+
+#Visualize o histograma das variáveis geradas
+#Observe como os dados se distribuem em torno do valor médio na va normal 
+
+hist(va_normal)
+
 #Observe como os dados não se distribuem em torno de um valor médio exibindo padrão assimétrico
 
-hist(va_nao_normal) # Visualize o QQ-Plot
-# Observe como os pontos de dados seguem a linha reta qq norm da va normal qqnorm(va_normal)
-qqline(va_normal) #Este comando é para adicionar a linha
+hist(va_nao_normal) 
 
-# Observe como os pontos de dados não seguem a linha reta na va não normal qqnorm(va_nao_normal)
-qqline(va_nao_normal) #Este comando é para adicionar a linha
+# Visualize o QQ-Plot
+# Observe como os pontos de dados seguem a linha reta qq norm da va normal 
 
-# Vamos aplicar o teste de hipóteses Shapiro Wilk. O teste funciona sob as hipóteses # H0: A variável segue uma distribuição normal
+qqnorm(va_normal)
+
+qqline(va_normal)
+
+#Este comando é para adicionar a linha
+# Observe como os pontos de dados não seguem a linha reta na va não normal 
+
+qqnorm(va_nao_normal)
+
+qqline(va_nao_normal) 
+
+#Este comando é para adicionar a linha
+
+# Vamos aplicar o teste de hipóteses Shapiro Wilk. O teste funciona sob as hipóteses 
+# H0: A variável segue uma distribuição normal
 # H1: A variável não segue uma distribuição normal
+# Fixe um nível de significância alfa e analise o p valor (p-value) do Shapiro Wilk 
+#Se o p-value for menor que alfa a hipótese nula deve ser rejeitada 
 
-
-
-# Fixe um nível de significância alfa e analise o p valor (p-value) do Shapiro Wilk #Se o p-value for menor que alfa a hipótese nula deve ser rejeitada shapiro.test(va_normal)
-
-
-
+shapiro.test(va_normal)
 
 shapiro.test(va_nao_normal)
 
@@ -43,14 +58,20 @@ shapiro.test(va_nao_normal)
 #Iremos simular o exemplo da apostila #Iremos testar se:
 # H0: As vendas na posição A são iguais as Vendas na Posição B
 
-# H1: As vendas na posição A são diferentes das vendas na posição B rm(list = ls()) #Limpa objetos da memória do R
+# H1: As vendas na posição A são diferentes das vendas na posição B 
+
+rm(list = ls()) 
+
+#Limpa objetos da memória do R
+
 mu1 <- 150.1 #Armazena as média de vendas na posição A
 
 mu2 <- 182.1 #Armazena as média de vendas na posição B
 
 
+s1 <- 17 #Armazena o desvio padrão das vendas na posição A 
 
-s1 <- 17 #Armazena o desvio padrão das vendas na posição A s2 <- 19.2 #Armazena o desvio padrão das vendas na posição B
+s2 <- 19.2 #Armazena o desvio padrão das vendas na posição B
 
 
 n1 <- 25 #Armazena a quantidade observações registradas para de vendas na posição A
@@ -59,40 +80,56 @@ n2 <- 30	#Armazena a quantidade observações registradas para de vendas na posi
 
 
 
-#Calcula nossa estatística de teste. Que é o t calculado t <- (mu1 - mu2) / sqrt( s1^2/n1 + s2^2/n2)
+#Calcula nossa estatística de teste. Que é o t calculado 
+
+t <- (mu1 - mu2) / sqrt( s1^2/n1 + s2^2/n2)
 t #Visualize o valor de t calculado
 
 #Calcula os graus de liberdade da estatística de teste
 
-gl <- (s1^2/n1 + s2^2/n2)^2 /( (s1^2/n1)^2 / (n1-1) + (s2^2/n2)^2 / (n2-1) ) gl #Visualize a quantidade de graus de liberdade
+gl <- (s1^2/n1 + s2^2/n2)^2 /( (s1^2/n1)^2 / (n1-1) + (s2^2/n2)^2 / (n2-1) ) 
+
+gl #Visualize a quantidade de graus de liberdade
+
 #Obtem o quantil (t crítico) para uma distribuição t com gl graus de liberdade. A um alfa de 5%
 
-quantil <- qt(0.975,df = gl) quantil #Visualize o t crítico
+quantil <- qt(0.975,df = gl) 
+quantil #Visualize o t crítico
+
 #Esse é o aspecto de uma distribuição t com n=53 observações e com n - 1 graus de liberdade
 
 plot(density(rt(n = 53,df = gl)),xlim = c(-7,7))
 
-#Observe onde estão os valores críticos que acabamos de encontrar abline(v = quantil,col = 'blue',lwd = 2)
+#Observe onde estão os valores críticos que acabamos de encontrar 
+abline(v = quantil,col = 'blue',lwd = 2)
 abline(v = -quantil,col = 'blue',lwd = 2)
+abline(v = t, col = 'red')#estatistica de teste
 
-abline(v = t, col = 'red')# Observe como o tcalculado é muito menor que o tcrítico. Está na região de rejeição
+# Observe como o tcalculado é muito menor que o tcrítico. Está na região de rejeição
 
-#Obtendo o valor p #P(Tcalculado > Tcritico) 2*pt(q = t, df = gl)
+#Obtendo o valor p 
+#P(Tcalculado > Tcritico) 
+
+2*pt(q = t, df = gl)
+
 #Agora vamos realizar o mesmo teste de hipótese utilizando a função nativa do R t.test()
 
+vendas_A <- rnorm(n= 25, mean = 150.1, sd = 17) 
+vendas_B <- rnorm(n = 30, mean = 182.1, sd = 19.2)
+#Observe no output desta função, que ela já nos da tudo pronto, t calculado e valor p 
 
+t.test(vendas_A,vendas_B, alternative = 'two.sided')
 
-vendas_A <- rnorm(n= 25, mean = 150.1, sd = 17) vendas_B <- rnorm(n = 30, mean = 182.1, sd = 19.2)
-#Observe no output desta função, que ela já nos da tudo pronto, t calculado e valor p t.test(vendas_A,vendas_B, alternative = 'two.sided')
 #Esse é o aspecto de uma distribuição t com n observações e com n - 1 graus de liberdade
 
-n <- 5
+n <- 1000
 
 plot(density(rt(n = n,df = n-1)))
 
 #Altere o valor de n de 5 em 5 observe que a medida que os graus de liberdade aumenta a distribuição se aproxima da normal. Como os valores são gerados
 
-aleatoriamente poderemos ter curvas diferentes para um mesmo valor de n, mas a medida que n cresce o comportamento simétrico tende a estabilizar.
+#aleatoriamente poderemos ter curvas diferentes para um mesmo valor de n, mas a medida que n cresce o comportamento simétrico tende a estabilizar.
+
 
 ################ Teste t para diferença de médias (duas amostras dependentes) ################
 
