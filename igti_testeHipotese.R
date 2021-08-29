@@ -137,55 +137,83 @@ plot(density(rt(n = n,df = n-1)))
 
 # H0: O peso médio após a dieta é igual ao peso médio antes da dieta
 
-# H1: O peso médio após a dieta é menor do que o peso médio antes da dieta rm(list = ls()) #Limpa memória do R
+# H1: O peso médio após a dieta é menor do que o peso médio antes da dieta 
+
+rm(list = ls()) #Limpa memória do R
 #Iremos utilizar uma biblioteca adicional para gerar valores aleatórios que sigam uma distribuição normal entre um intervalo de valor para simular os pesos
 
 #A	biblioteca	chama	'truncnorm'.	Basta	instalar	com	o	comando	abaixo install.packages().
 
 #Uma vez instalada não há mais necessidade de instalar novamente. Basta carregar com o comando library()
 
-install.packages('truncnorm') library(truncnorm) set.seed(100)
+install.packages('truncnorm') 
+library(truncnorm) 
+
+set.seed(100)
 #Gera uma amostra aleatória, seguindo uma distribuição normal cujo valor mínimo é 100 e o valor máximo é 140.
 
 #O valor de n=20, média = 123 e desvio padrão 18
 
-#Com essa v.a. iremos simular os pesos dos indivíduos antes da dieta antes_da_dieta <- rtruncnorm(n=20, a=100, b=140, mean=123, sd=18)
+#Com essa v.a. iremos simular os pesos dos indivíduos antes da dieta 
+
+antes_da_dieta <- rtruncnorm(n=20, a=100, b=140, mean=123, sd=18)
 
 #Gera uma amostra aleatória, seguindo uma distribuição normal cujo valor mínimo é 110 e o valor máximo é 130.
 
 #O valor de n=20, média = 110 e desvio padrão 28
 
-#Com essa v.a. iremos simular os pesos dos indivíduos após a dieta depois_da_dieta <- rtruncnorm(n=20, a=110, b=130, mean=110, sd=28) #Calcula a diferença depois da dieta e antes da dieta, para cada indivíduo diferenca <- depois_da_dieta-antes_da_dieta
-#Visualiza a distribuicao da diferença de pesos hist(diferenca)
-shapiro.test(diferenca) #Avalie a normalidade da distribuição da diferença #Aplica test t com os seguintes argumentos t.test(depois_da_dieta,antes_da_dieta,
-paired = TRUE, #Pareado
+#Com essa v.a. iremos simular os pesos dos indivíduos após a dieta 
 
-alternative = "less", #Unilateral a esquerda conf.level = 0.9 #90 porcento de confiança
+depois_da_dieta <- rtruncnorm(n=20, a=110, b=130, mean=110, sd=28) 
+
+#Calcula a diferença depois da dieta e antes da dieta, para cada indivíduo 
+
+diferenca <- depois_da_dieta-antes_da_dieta
+
+#Visualiza a distribuicao da diferença de pesos 
+
+hist(diferenca)
+
+shapiro.test(diferenca) 
+
+#Avalie a normalidade da distribuição da diferença #Aplica test t com os seguintes argumentos 
+
+t.test(depois_da_dieta,antes_da_dieta,
+       paired = TRUE, #Pareado
+       alternative = "less", #Unilateral a esquerda 
+       conf.level = 0.9 #90 porcento de confiança
 )
 
 #O comando t.test() acima nos da tudo que precisamos para executar e concluir o teste. Mas a título de conhecimento, podemos realizar o teste passo a passo
 
-#Calcula a média das diferenças media <- mean(diferenca) #Desvio padrão das diferenças
+#Calcula a média das diferenças 
+
+media <- mean(diferenca) #Desvio padrão das diferenças
 
 desvio_padrao <- sd(diferenca) #Quantidade de indivíduos
+
 n <- 20
 
 #Obtem o t calculado
 
 t_calculado <- media / (desvio_padrao/sqrt(n))
 
-#Obtem o valor p para o t calculado com n - 1 graus de liberdade. pt(q = t_calculado, df = n-1)
+#Obtem o valor p para o t calculado com n - 1 graus de liberdade. 
+
+pt(q = t_calculado, df = n-1)
+
 #Podemos também obter o t crítico para uma distribuição t com 19 (n-1=20-1) graus de liberdade ao nível de confiança de 90%
 
+tcrítico_teste_t_pareado <- -qt(p = 0.9, df = 19) 
 
-
-tcrítico_teste_t_pareado <- -qt(p = 0.9, df = 19) #Devido ao teste ser unilateral a esquerda a distribuição t ser simétrica, nossa estatística de teste será negativa
-
-
+#Devido ao teste ser unilateral a esquerda a distribuição t ser simétrica, nossa estatística de teste será negativa
 
 #Observe que o t calculado é maior que o t critico. Como estamos em um teste unilateral a esquerda o t calculado
 
-#estará fora da região de rejeição caso seja maior que o t crítico t_calculado < tcrítico_teste_t_pareado
+#estará fora da região de rejeição caso seja maior que o t crítico 
+
+t_calculado < tcrítico_teste_t_pareado
+
 ?t.test #Maiores informações sobre o comando t.test()
 
 ################ Teste Qui-Quadrado para associação entre variáveis categóricas ################
@@ -250,7 +278,7 @@ Cliente = c("Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
             
             
-            "Adulto","Adulto","Adulto","Adulto","Adulto","Adulto"),
+            "Adulto","Adulto","Adulto","Adulto","Adulto","Adulto")
 
 
 
@@ -290,12 +318,9 @@ Comprou = c("Não_Comprou", "Não_Comprou", "Não_Comprou", "Não_Comprou",
             "Não_Comprou",	"Não_Comprou",	"Não_Comprou", "Comprou","Comprou","Comprou","Comprou","Comprou","Comprou")
 
 
-
-)
-
-
-
-#Visualiza o conjunto de dados View(dados)
+#Visualiza o conjunto de dados 
+View(Cliente)
+View(Comprou)
 #Gera tabela de contigência 2x2
 
 tabela <- table(dados$Cliente,dados$Comprou) tabela
