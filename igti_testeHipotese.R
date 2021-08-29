@@ -226,104 +226,62 @@ t_calculado < tcrítico_teste_t_pareado
 
 rm(list = ls())
 
-#Vamos gerar um data frame contendo os dados da pesquisa dados <- data.frame(
+#Vamos gerar um data frame contendo os dados da pesquisa 
 
-
-Cliente = c("Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
-            
-            
+dados <- data.frame(
+  Cliente = c("Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
             "Adulto", "Adulto", "Adulto", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
-            
+            "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
             "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
-            
+            "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
             "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
             
-            
-            
             "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
-            
-            
-            
-            "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
-            
-            
-            
-            "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
-            
-            
-            
             
             "Adulto_com_Crianca", "Adulto", "Adulto", "Adulto", "Adulto",
             
-            
-            
             "Adulto_com_Crianca", "Adulto_com_Crianca", "Adulto_com_Crianca",
-            
-            
             
             "Adulto_com_Crianca", "Adulto", "Adulto_com_Crianca", "Adulto",
             
-            
-            
             "Adulto",	"Adulto_com_Crianca",	"Adulto_com_Crianca", "Adulto_com_Crianca",
-            
-            
             
             "Adulto", "Adulto_com_Crianca", "Adulto", "Adulto", "Adulto",
             
-            
-            
-            "Adulto","Adulto","Adulto","Adulto","Adulto","Adulto")
-
-
-
-Comprou = c("Não_Comprou", "Não_Comprou", "Não_Comprou", "Não_Comprou",
-            
-            
-            
+            "Adulto","Adulto","Adulto","Adulto","Adulto","Adulto"),
+  Comprou = c("Não_Comprou", "Não_Comprou", "Não_Comprou", "Não_Comprou",
+              
             "Não_Comprou", "Não_Comprou", "Comprou", "Comprou", "Comprou",
             
-            
-            
             "Comprou", "Comprou", "Comprou", "Comprou", "Comprou", "Comprou",
             
-            
-            
             "Comprou", "Comprou", "Comprou", "Comprou", "Comprou", "Comprou",
-            
-            
-            
             
             "Comprou", "Comprou", "Comprou", "Não_Comprou", "Não_Comprou",
             
-            
-            
             "Não_Comprou", "Não_Comprou", "Comprou", "Não_Comprou", "Comprou",
-            
-            
             
             "Comprou",	"Não_Comprou",	"Não_Comprou",	"Não_Comprou", "Não_Comprou",
             
-            
-            
             "Não_Comprou", "Comprou", "Comprou", "Não_Comprou", "Não_Comprou",
             
-            
-            
             "Não_Comprou",	"Não_Comprou",	"Não_Comprou", "Comprou","Comprou","Comprou","Comprou","Comprou","Comprou")
-
+)
 
 #Visualiza o conjunto de dados 
 View(Cliente)
 View(Comprou)
+
+View(dados)
 #Gera tabela de contigência 2x2
 
-tabela <- table(dados$Cliente,dados$Comprou) tabela
+tabela <- table(dados$Cliente,dados$Comprou) 
+tabela
 barplot(tabela)
 
 #O valor críticico para uma distribuição qui-quadrado com (linhas-1)*(colunas-1)=1 grau de liberdade ao nível de confiança de 95%
@@ -333,7 +291,8 @@ qchisq(p=0.95,df = 1) #O valor p unilateral fica
 
 #Assim como fizemos no test t, podemos usar um comando direto no R para realizar o teste qui-quadrado chisq.test()
 
-teste<-chisq.test(tabela,correct = F) teste
+teste<-chisq.test(tabela,correct = F) 
+teste
 #Visualiza valores observados. Que nada mais é do que a tabela original teste$observed
 #Visualiza valores esperados teste$expected
 
@@ -447,12 +406,12 @@ dados_anova <- data.frame(Gastos = c(174.770021661909, 161.329206619394, 153.679
                                      22.1605754480815,
                                      
                                      5.90830712162365,	54.3457453874529,	33.3341495203441,
-                                     37.2034845899045
-                                     
-), Estado_Civil = c("solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "Casados", "Casados",
+                                     37.2034845899045),
+                          Estado_Civil = c("solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "solteiros", "Casados", "Casados",
                     
                     "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Casados", "Divorciados", "Divorciados", "Divorciados", "Divorciados", "Divorciados", "Divorciados", "Divorciados", "Divorciados", "Divorciados", "Divorciados",
-                    "Divorciados",	"Divorciados",	"Divorciados",	"Divorciados", "Divorciados"))
+                    "Divorciados",	"Divorciados",	"Divorciados",	"Divorciados", "Divorciados")
+                    )
 
 #Visualiza o conjunto de dados
 
